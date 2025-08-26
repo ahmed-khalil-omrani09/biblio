@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #1f1f1f;
     color: white;
 }
@@ -12,7 +11,7 @@ body {
     min-height: 100vh;
 }
 
-nav {
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -24,13 +23,13 @@ nav {
     height: 60px;
 }
 
-nav ul {
+ul {
     display: flex;
     list-style: none;
     gap: 20px;
 }
 
-nav ul li a {
+ul li link{
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -132,7 +131,7 @@ footer {
     font-size: 14px;
 }
 
-footer a {
+footer link {
     color: #e91313;
     text-decoration: none;
 }
@@ -164,4 +163,6 @@ footer a {
     text-decoration: none;
     cursor: pointer;
 }
-
+#account-logout-container a:hover {
+    color: #e91313;
+}

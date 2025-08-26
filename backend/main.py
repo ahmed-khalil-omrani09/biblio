@@ -3,8 +3,11 @@ import socketserver
 import json
 from http import HTTPStatus
 from datetime import datetime
+from pathlib import Path
 from database import Database
 from models import utilisateur, livre, emprunt
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / 'frontend'
 
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -12,7 +15,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         self.utilisateur = utilisateur(self.db)
         self.livre = livre(self.db)
         self.emprunt = emprunt(self.db)
-        super().__init__(*args, directory='../frontend', **kwargs)
+        super().__init__(*args, directory=str(FRONTEND_DIR), **kwargs)
     
     def do_OPTIONS(self):
         """Gérer les requêtes CORS"""
@@ -27,6 +30,8 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_login()
         elif self.path == '/api/emprunter':
             self.handle_emprunter()
+        elif self.path =='/utilisateur':
+            self.handle_create_utlisateur()
         else:
             self.send_error(HTTPStatus.NOT_FOUND, 'Route non trouvée')
     
@@ -83,6 +88,20 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         
         result = self.emprunt.creer(id_utilisateur, id_livre, date_remettre)
         self.send_json(result)
+
+    def handle_create_utlisateur(self):
+        data = self.get_post_data()
+        if not data:
+            return
+        id=data.get("id")
+        nom = data.get("nom")
+        prenom = data.get("prenom")
+        email = data.get("email")
+        tel = data.get("tel")
+        password = data.get("password")
+        result = self.utilisateur.creer(data)
+        self.send_json(result)
+
     
     def get_post_data(self):
         """Récupérer les données POST"""
@@ -109,7 +128,7 @@ def run_server(port=8000):
     """Démarrer le serveur"""
     with socketserver.TCPServer(("", port), RequestHandler) as httpd:
         print(f"📚 Serveur démarré sur http://localhost:{port}")
-        print("📁 Frontend: ../frontend/")
+        print(f"📁 Frontend: {FRONTEND_DIR}")
         print("🗄️  Base de données: database/biblio.db")
         print("🚀 Appuyez sur Ctrl+C pour arrêter")
         
