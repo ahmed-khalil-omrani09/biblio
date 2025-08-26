@@ -70,6 +70,7 @@ function Home() {
                 <Link to="/inscri" id="account-icon" title="Create an account">
                     <img id="account-img" src="/iconinscri.png" alt="Account" />
                 </Link>
+                
             )}
             </div>
         </div>

@@ -30,10 +30,10 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_login()
         elif self.path == '/api/emprunter':
             self.handle_emprunter()
-        elif self.path =='/utilisateur':
+        elif self.path =='/api/utilisateur':
             self.handle_create_utlisateur()
         else:
-            self.send_error(HTTPStatus.NOT_FOUND, 'Route non trouvée')
+            self.send_error(HTTPStatus.NOT_FOUND, 'file non trouvée')
     
     def do_GET(self):
         if self.path == '/api/livres':
@@ -99,10 +99,9 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         email = data.get("email")
         tel = data.get("tel")
         password = data.get("password")
-        result = self.utilisateur.creer(data)
+        result = self.utilisateur.creer(id,nom,prenom,email,tel,password)
         self.send_json(result)
 
-    
     def get_post_data(self):
         """Récupérer les données POST"""
         try:

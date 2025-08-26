@@ -1,8 +1,14 @@
 import sqlite3
 from contextlib import contextmanager
+import os
 
 class Database:
-    def __init__(self, db_path: str = "database/biblio.db"):
+    def __init__(self, db_path: str = None):
+        if db_path is None:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            db_dir = os.path.join(base_dir, '..', 'database')
+            os.makedirs(db_dir, exist_ok=True)  
+            db_path = os.path.join(db_dir, 'biblio.db')
         self.db_path = db_path
         self.verifier_structure()
 
