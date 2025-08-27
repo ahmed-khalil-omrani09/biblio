@@ -36,11 +36,11 @@ function Home() {
         <div className="navbar">
             <img src="/icon-logo.jpg" alt="logo" id="logo" />
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/terms">Terms of Service</Link></li>
-                <li><Link to="/privacy">Privacy Policy</Link></li>
+                <li ><a href="/">Home</a></li>
+                <li><a href="/public/about">About</a></li>
+                <li><a href="/public/contact">Contact</a></li>
+                <li><a href="/public/terms">Terms of Service</a></li>
+                <li><a href="/public/privacy">Privacy Policy</a></li>
             </ul>
             <form id="searchForm" onSubmit={(e) => {
                 e.preventDefault();
@@ -53,6 +53,7 @@ function Home() {
                     <input type="text" placeholder="Search..." required />
                     <button type="submit">Search</button>
             </form>
+
             <div id="account-logout-container">{isLoggedIn ? (
                 <>
                 <span style={{ marginLeft: "8px", fontWeight: "bold" }}>{username}</span>
@@ -69,9 +70,9 @@ function Home() {
                 ) : (
                 <Link to="/inscri" id="account-icon" title="Create an account">
                     <img id="account-img" src="/iconinscri.png" alt="Account" />
-                </Link>
-                
+                </Link>                
             )}
+            <Link to="#" onClick="logout()">Logout</Link>
             </div>
         </div>
         <main>
