@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./emprunter.css";
+import "./emprunt.css";
 
 function Emprunter() {
   const navigate = useNavigate();
@@ -10,13 +10,13 @@ function Emprunter() {
     num_biblio: "",
     titre: "",
     date_emprunt: "",
-    date_retour: ""
+    date_retour: "",
   });
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -28,14 +28,14 @@ function Emprunter() {
       num_biblio: form.num_biblio,
       titre: form.titre,
       date_emprunt: form.date_emprunt,
-      date_remettre: form.date_retour
+      date_remettre: form.date_retour,
     };
 
     try {
       const res = await fetch("/api/emprunter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       const json = await res.json();
       alert(json.message);

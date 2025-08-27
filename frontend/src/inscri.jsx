@@ -4,13 +4,12 @@ import "./inscri.css";
 
 function Inscription() {
   const [form, setForm] = useState({
-    id: "",
     nom: "",
     prenom: "",
     email: "",
     tel: "",
     password: "",
-    confirm_password: ""
+    confirm_password: "",
   });
 
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ function Inscription() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,10 +27,10 @@ function Inscription() {
     }
 
     try {
-      const res=await fetch("http://127.0.0.1:8000/utilisateur", {
+      const res = await fetch("http://localhost:8000/api/utilisateur", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
+        body: JSON.stringify(form),
       });
 
       if (!res.ok) {
@@ -44,7 +43,6 @@ function Inscription() {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", form.nom + " " + form.prenom);
 
-      alert("Account created successfully!");
       navigate("/");
     } catch (err) {
       alert("Erreur lors de l'inscription");
@@ -56,19 +54,58 @@ function Inscription() {
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>INSCRIPTION</legend>
-        <input type="text" name="id" placeholder="ID" required onChange={handleChange} />
         <br />
-        <input type="text" name="nom" placeholder="Nom" required onChange={handleChange} />
-        <br/>
-        <input type="text" name="prenom" placeholder="Prenom" required onChange={handleChange} />
+        <input
+          type="text"
+          name="nom"
+          placeholder="Nom"
+          required
+          value={form.nom}
+          onChange={handleChange}
+        />
         <br />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} />
+        <input
+          type="text"
+          name="prenom"
+          placeholder="Prenom"
+          required
+          value={form.prenom}
+          onChange={handleChange}
+        />
         <br />
-        <input type="tel" name="tel" placeholder="Telephone" onChange={handleChange} />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
         <br />
-        <input type="password" name="password" placeholder="Mot de passe" required onChange={handleChange} />
+        <input
+          type="tel"
+          name="tel"
+          placeholder="Telephone"
+          value={form.tel}
+          onChange={handleChange}
+        />
         <br />
-        <input type="password" name="confirm_password" placeholder="Confirmer Mot de passe" required onChange={handleChange} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          required
+          value={form.password}
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="password"
+          name="confirm_password"
+          placeholder="Confirmer Mot de passe"
+          required
+          value={form.confirm_password}
+          onChange={handleChange}
+        />
         <br />
         <input type="submit" value="Connecter" />
       </fieldset>

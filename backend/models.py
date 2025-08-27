@@ -7,6 +7,7 @@ class utilisateur:
     
     def creer(self, id, nom, prenom, email, tel, mdp):
         try:
+
             with self.bd.connect() as conn:
                 cursor = conn.cursor()
                 cursor.execute(
@@ -30,6 +31,7 @@ class utilisateur:
 
     def verifier_identifiants(self, email, mot_de_passe):
         try:
+           
             with self.bd.connect() as conn:
                 cursor = conn.cursor()
                 cursor.execute(
