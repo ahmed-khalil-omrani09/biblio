@@ -18,7 +18,7 @@ function Inscription() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,17 +28,10 @@ function Inscription() {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/utilisateur", {
+      const res=await fetch("http://127.0.0.1:8000/utilisateur", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: form.id,
-          nom: form.nom,
-          prenom: form.prenom,
-          email: form.email,
-          tel: form.tel,
-          password: form.password
-        })
+        body: JSON.stringify(form)
       });
 
       if (!res.ok) {

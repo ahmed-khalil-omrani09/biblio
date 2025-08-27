@@ -89,8 +89,8 @@ function Home() {
         </main>
         <footer>
             <p>&copy; 2025 Bibliotheque. All rights reserved. |{" "}
-                <Link to="/terms">Terms of Service</Link> |{" "}
-                <Link to="/privacy">Privacy Policy</Link>
+                <a href="/public/terms">Terms of Service</a> |{" "}
+                <a href="/public/privacy">Privacy Policy</a>
             </p>
         </footer>
     </div>

@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from database import Database
 from models import utilisateur, livre, emprunt
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / 'frontend'
 
@@ -18,12 +19,25 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(FRONTEND_DIR), **kwargs)
     
     def do_OPTIONS(self):
-        """Gérer les requêtes CORS"""
         self.send_response(HTTPStatus.OK)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
+
+    def send_error(self, code, message=None, explain=None):
+        self.send_response(code)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+        self.wfile.write(json.dumps({
+            'success': False,
+            'error': message or 'Unknown error'
+        }).encode('utf-8'))
+
+
     
     def do_POST(self):
         if self.path == '/api/login':
@@ -136,6 +150,8 @@ def run_server(port=8000):
         except KeyboardInterrupt:
             print("\n🛑 Arrêt du serveur...")
             httpd.shutdown()
+
+ 
 
 if __name__ == "__main__":
     run_server()
